@@ -2,13 +2,16 @@ package com.example;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mockito;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 @RunWith(Parameterized.class)
 public class LionTest {
+    private final Feline feline = Mockito.spy(Feline.class);
     private final String sex;
     private final boolean hasMane;
 
@@ -34,7 +37,7 @@ public class LionTest {
     @Test
     public void testDoesHaveMane() throws Exception {
         boolean lionHasMane = new Lion(sex, new Feline()).doesHaveMane();
-        assertEquals("Не совпадает наличие/отсутствие гривы", lionHasMane, hasMane);
+        assertEquals("Не совпадает", lionHasMane, hasMane);
     }
 
     @Test
@@ -42,4 +45,10 @@ public class LionTest {
         List<String> lionFood = new Lion(sex, new Feline()).getFood();
         assertEquals("Не совпадает список еды", lionFood, List.of("Животные", "Птицы", "Рыба"));
     }
+    @Test
+    public void getFoodKind() throws Exception {
+        new Lion(sex, feline).getFood();
+        Mockito.verify(feline).getFood("Хищник");
+    }
+
 }
