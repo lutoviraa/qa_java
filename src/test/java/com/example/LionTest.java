@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThrows;
 
 @RunWith(Parameterized.class)
 public class LionTest {
-    private final Feline feline = Mockito.spy(Feline.class);
+    private final Feline feline = Mockito.mock(Feline.class);
     private final String sex;
     private final boolean hasMane;
 
